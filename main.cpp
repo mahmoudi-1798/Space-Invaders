@@ -12,7 +12,7 @@
 #include "include/scenes.h"
 
 #define SMALL_SANS 25
-#define BOLD_SANS 50
+#define BOLD_SANS 40
 #define BIG_SANS 120
 
 SDL_Texture* enemyBulletTexture;
@@ -40,9 +40,11 @@ App app;
 Entity player;
 
 void renderMenu(SDL_Renderer* renderer, TTF_Font* font);
-void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool &fullscreen,int &menuOption, SDL_Event e);
+void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool& about, bool &fullscreen,int &menuOption, SDL_Event e);
 void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
 void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event e);
+void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
+void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e);
 
 bool fullscreen = false;
 
@@ -201,10 +203,11 @@ int main() {
     bool menu = true;
     bool game = false;
     bool setting;
+    bool about;
     SDL_Event e;
     int menuOption = 0;
 
-    displayMenu(window ,renderer, game, menu, setting, fullscreen, menuOption, e);
+    displayMenu(window ,renderer, game, menu, setting, about, fullscreen, menuOption, e);
 
 
     while(game){
@@ -333,7 +336,7 @@ int main() {
             showGameOverScene(SansBold, smallSans);
             game = false;
             menu = true;
-            displayMenu(window, renderer, game, menu, setting, fullscreen, menuOption, e);
+            displayMenu(window, renderer, game, menu, setting, about, fullscreen, menuOption, e);
         }
     }
 
@@ -374,13 +377,19 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2) {
 
     SDL_Surface* cursor = IMG_Load("resources/cursor.png");
     SDL_Texture* cursorTex = SDL_CreateTextureFromSurface(renderer, cursor);
-    SDL_Rect curRect = {SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT/2 + 93, 17, 19};
+    SDL_Rect curRect = {SCREEN_WIDTH / 2 - 180, SCREEN_HEIGHT/2 + 120, 17, 19};
     SDL_RenderCopy(renderer, cursorTex, NULL, &curRect);
 
 
     SDL_Color textColor = { 255, 255, 255 };
-    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "Space Invaders", textColor);
-    SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
+    //SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "Space Invaders", textColor);
+    //SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
+
+    SDL_Surface* logo = IMG_Load("resources/logo.png");
+    SDL_Texture* logoTex = SDL_CreateTextureFromSurface(renderer, logo);
+    SDL_Rect logoRect = {185, 30, 900, 389};
+    SDL_RenderCopy(renderer, logoTex, NULL, &logoRect);
+
 
     SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "New Game", textColor);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
@@ -388,19 +397,22 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2) {
     SDL_Surface* textSurface3 = TTF_RenderText_Solid(font1, "Setting", textColor);
     SDL_Texture* textTexture3 = SDL_CreateTextureFromSurface(renderer, textSurface3);
     
-    SDL_Surface* textSurface4 = TTF_RenderText_Solid(font1, "Exit", textColor);
+    SDL_Surface* textSurface4 = TTF_RenderText_Solid(font1, "About", textColor);
     SDL_Texture* textTexture4 = SDL_CreateTextureFromSurface(renderer, textSurface4);
+
+    SDL_Surface* textSurface5 = TTF_RenderText_Solid(font1, "Exit", textColor);
+    SDL_Texture* textTexture5 = SDL_CreateTextureFromSurface(renderer, textSurface5);
     
-    SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, SCREEN_HEIGHT / 3 - textSurface1->h / 2,
-                          textSurface1->w, textSurface1->h };
-    SDL_RenderCopy(renderer, textTexture1, NULL, &textRect1);
+    //SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, SCREEN_HEIGHT / 3 - textSurface1->h / 2,
+      //                    textSurface1->w, textSurface1->h };
+    //SDL_RenderCopy(renderer, textTexture1, NULL, &textRect1);
 
      
-    SDL_Rect textRect2 = { SCREEN_WIDTH / 2 - textSurface2->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 2) + 100,
+    SDL_Rect textRect2 = { SCREEN_WIDTH / 2 - textSurface2->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 2) + 140,
                           textSurface2->w, textSurface2->h };
     SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
      
-    SDL_Rect textRect3 = { SCREEN_WIDTH / 2 - textSurface3->w / 2, (SCREEN_HEIGHT / 2 - textSurface3->h / 2) + 170,
+    SDL_Rect textRect3 = { SCREEN_WIDTH / 2 - textSurface3->w / 2, (SCREEN_HEIGHT / 2 - textSurface3->h / 2) + 190,
                           textSurface3->w, textSurface3->h };
     SDL_RenderCopy(renderer, textTexture3, NULL, &textRect3);
 
@@ -408,11 +420,18 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2) {
                           textSurface4->w, textSurface4->h };
     SDL_RenderCopy(renderer, textTexture4, NULL, &textRect4);
 
+    SDL_Rect textRect5 = { SCREEN_WIDTH / 2 - textSurface5->w / 2, (SCREEN_HEIGHT / 2 - textSurface5->h / 2) + 290,
+                          textSurface5->w, textSurface5->h };
+    SDL_RenderCopy(renderer, textTexture5, NULL, &textRect5);
+
     SDL_DestroyTexture(cursorTex);
     SDL_FreeSurface(cursor);
 
-    SDL_DestroyTexture(textTexture1);
-    SDL_FreeSurface(textSurface1);
+    //SDL_DestroyTexture(textTexture1);
+    //SDL_FreeSurface(textSurface1);
+
+    SDL_DestroyTexture(logoTex);
+    SDL_FreeSurface(logo);
 
     SDL_DestroyTexture(textTexture2);
     SDL_FreeSurface(textSurface2);
@@ -423,10 +442,13 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2) {
     SDL_DestroyTexture(textTexture4);
     SDL_FreeSurface(textSurface4);
 
+    SDL_DestroyTexture(textTexture5);
+    SDL_FreeSurface(textSurface5);
+
     SDL_RenderPresent(renderer);
 }
 
-void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool &fullscreen,int &menuOption, SDL_Event e){
+void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
 
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
     TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
@@ -439,11 +461,11 @@ void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &m
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_UP) {
                     // Handle up arrow key press to move the selection up
-                    menuOption = (menuOption - 1 + 3) % 3; // Assuming you have 3 menu options
+                    menuOption = (menuOption - 1 + 4) % 4; // Assuming you have 3 menu options
                 }
                 else if (e.key.keysym.sym == SDLK_DOWN) {
                     // Handle down arrow key press to move the selection down
-                    menuOption = (menuOption + 1) % 3; // Assuming you have 3 menu options
+                    menuOption = (menuOption + 1) % 4; // Assuming you have 3 menu options
                 }
                 else if (e.key.keysym.sym == SDLK_RETURN) {
                     // Handle enter key press to select an option
@@ -460,6 +482,12 @@ void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &m
                             displaySetting(renderer, setting, menu, e);
                             break;
                         case 2:
+                            // Exit game
+                            about = true;
+                            displayAbout(renderer, about, menu, e);
+                            break;
+
+                        case 3:
                             // Exit game
                             menu = false; // Exit the program
                             game = false;
@@ -491,40 +519,40 @@ void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Controls", textColor);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
     
-    SDL_Surface* textSurface31 = TTF_RenderText_Solid(font1, "right:                D Key", textColor);
+    SDL_Surface* textSurface31 = TTF_RenderText_Solid(font1, "Right:                D Key", textColor);
     SDL_Texture* textTexture31= SDL_CreateTextureFromSurface(renderer, textSurface31);
     
-    SDL_Surface* textSurface32 = TTF_RenderText_Solid(font1, "left:                 A key", textColor);
+    SDL_Surface* textSurface32 = TTF_RenderText_Solid(font1, "Left:                 A key", textColor);
     SDL_Texture* textTexture32 = SDL_CreateTextureFromSurface(renderer, textSurface32);
 
-    SDL_Surface* textSurface4 = TTF_RenderText_Solid(font1, "shoot:                Space key", textColor);
+    SDL_Surface* textSurface4 = TTF_RenderText_Solid(font1, "Shoot:                SPACE key", textColor);
     SDL_Texture* textTexture4 = SDL_CreateTextureFromSurface(renderer, textSurface4);
 
-    SDL_Surface* textSurface5 = TTF_RenderText_Solid(font1, "fullscreen:           F11", textColor);
+    SDL_Surface* textSurface5 = TTF_RenderText_Solid(font1, "Fullscreen:           F11", textColor);
     SDL_Texture* textTexture5 = SDL_CreateTextureFromSurface(renderer, textSurface5);
     
-    SDL_Rect textRect1 = { 100 , 100,
+    SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 1) -200,
                           textSurface1->w, textSurface1->h };
     SDL_RenderCopy(renderer, textTexture1, NULL, &textRect1);
 
      
-    SDL_Rect textRect2 = { 150 , 200,
+    SDL_Rect textRect2 = { SCREEN_WIDTH / 2 - textSurface2->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 2) -150,
                           textSurface2->w, textSurface2->h };
     SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
      
-    SDL_Rect textRect31 = { 200, 270,
+    SDL_Rect textRect31 = { 450, 270,
                           textSurface31->w, textSurface31->h };
     SDL_RenderCopy(renderer, textTexture31, NULL, &textRect31);
 
-    SDL_Rect textRect32 = { 200, 320,
+    SDL_Rect textRect32 = {450, 320,
                           textSurface32->w, textSurface32->h };
     SDL_RenderCopy(renderer, textTexture32, NULL, &textRect32);
 
-    SDL_Rect textRect4 = { 200, 370,
+    SDL_Rect textRect4 = { 450, 370,
                           textSurface4->w, textSurface4->h };
     SDL_RenderCopy(renderer, textTexture4, NULL, &textRect4);
 
-    SDL_Rect textRect5 = { 200, 420,
+    SDL_Rect textRect5 = { 450, 420,
                           textSurface5->w, textSurface5->h };
     SDL_RenderCopy(renderer, textTexture5, NULL, &textRect5);
 
@@ -570,6 +598,80 @@ void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event
        
 }
 
-void about(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
+void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
 
+    SDL_Color textColor = { 255, 255, 255 };
+    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "About", textColor);
+    SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
+
+    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Final project of Advanced Progrmming (Spring Semestre)", textColor);
+    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
+    
+    SDL_Surface* textSurface11 = TTF_RenderText_Solid(font2, "Socials", textColor);
+    SDL_Texture* textTexture11 = SDL_CreateTextureFromSurface(renderer, textSurface11);
+
+    SDL_Surface* textSurface31 = TTF_RenderText_Solid(font1, "Github:           github.com/mahmoudi-1798", textColor);
+    SDL_Texture* textTexture31= SDL_CreateTextureFromSurface(renderer, textSurface31);
+    
+    SDL_Surface* textSurface32 = TTF_RenderText_Solid(font1, "Linkedin:         linkedin.com/in/mohammad-hassan-mahmoudi", textColor);
+    SDL_Texture* textTexture32 = SDL_CreateTextureFromSurface(renderer, textSurface32);
+    
+    SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 1) -200,
+                          textSurface1->w, textSurface1->h };
+    SDL_RenderCopy(renderer, textTexture1, NULL, &textRect1);
+
+    SDL_Rect textRect11 = { SCREEN_WIDTH / 2 - textSurface11->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 11)  ,
+                          textSurface11->w, textSurface11->h };
+    SDL_RenderCopy(renderer, textTexture11, NULL, &textRect11);     
+
+    SDL_Rect textRect2 = { SCREEN_WIDTH / 2 - textSurface2->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 2) -130,
+                          textSurface2->w, textSurface2->h };
+    SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
+     
+    SDL_Rect textRect31 = { 300, 430,
+                          textSurface31->w, textSurface31->h };
+    SDL_RenderCopy(renderer, textTexture31, NULL, &textRect31);
+
+    SDL_Rect textRect32 = { 300, 480,
+                          textSurface32->w, textSurface32->h };
+    SDL_RenderCopy(renderer, textTexture32, NULL, &textRect32);
+
+    SDL_DestroyTexture(textTexture1);
+    SDL_FreeSurface(textSurface1);
+
+    SDL_DestroyTexture(textTexture11);
+    SDL_FreeSurface(textSurface11);
+
+    SDL_DestroyTexture(textTexture2);
+    SDL_FreeSurface(textSurface2);
+    
+    SDL_DestroyTexture(textTexture31);
+    SDL_FreeSurface(textSurface31);
+
+    SDL_DestroyTexture(textTexture32);
+    SDL_FreeSurface(textSurface32);
+
+    SDL_RenderPresent(renderer);
+}
+
+void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e){
+    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
+    while(about){
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) {
+                about = false;
+                menu = false;
+            }
+            else if (e.type == SDL_KEYDOWN) {
+                if (e.key.keysym.sym == SDLK_RETURN) {
+                    about = false;
+                    menu = true;
+                }
+            }
+        }
+        renderAbout(renderer, SansSmall, SansBold);
+    }     
 }
