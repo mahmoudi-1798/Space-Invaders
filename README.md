@@ -1,6 +1,6 @@
 # Space Invaders
 
-![alt text](https://github.com/mahmoudi-1798/Space-Invaders/blob/v2.0/resources/Game.png?raw=true)
+![alt text](https://github.com/mahmoudi-1798/Space-Invaders/blob/master/resources/Game.png?raw=true)
 
 ## Final Project Of ( Advanced Programming ) - Spring of 2023
 From the beginning of my programming journey, I was so passionate about game development, so a few weeks back, I started to learn SDL2. 
