@@ -50,141 +50,7 @@ void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e);
 bool fullscreen = false;
 
 int main() {
-    /*
-    memset(&app, 0, sizeof(App));
-    initSDL();
-    TTF_Font* smallSans = TTF_OpenFont("resources/virgo.ttf", 10);
-    TTF_Font* SansBold = TTF_OpenFont("resources/virgo.ttf", 50);
-    
-    int playerLives = 3;
-
-    memset(&player, 0, sizeof(Entity));
-
-    player.texture = loadTexture(loadSurface("resources/playership.png"));
-    //SDL_Texture* playBackground = loadTexture(loadSurface("resources/background1.jpg"));
-    enemyBulletTexture = loadTexture(loadSurface("resources/enemyBullet.png"));
-    extraEnemyTexture = loadTexture(loadSurface("resources/extraEnemy.png"));
-    enemyFirstRowBTexture = loadTexture(loadSurface("resources/1b.png"));
-    enemySecondRowBTexture = loadTexture(loadSurface("resources/2b.png"));
-    enemyOtherRowsBTexture = loadTexture(loadSurface("resources/3b.png"));
-    enemyFirstRowATexture = loadTexture(loadSurface("resources/1a.png"));
-    enemySecondRowATexture = loadTexture(loadSurface("resources/2a.png"));
-    enemyOtherRowsATexture = loadTexture(loadSurface("resources/3a.png"));
-    deadEnemyTexture = loadTexture(loadSurface("resources/dead.png"));
-
-
-    Entity* firstBullet = NULL;
-    Entity* addedBullet = NULL;
-    Entity* firstEnemy = NULL;
-    Entity* addedEnemy = NULL;
-    Entity* firstEnemyBullet = NULL;
-    Entity* addedEnemyBullet = NULL;
-    Entity* walls = NULL;
-    Entity* extraEnemy = makeExtraEnemy();
-    Interval* underLineTearIntervals = NULL;
-    Interval* addedUnderLineTearInterval = underLineTearIntervals;
-    
-    player.width = 100;
-    player.height = 50;
-    player.health = 1;
-    char scoreBuffer[20];
-    SDL_Rect scorePosition = {20, 10, 180, 50};
-    int prevScore = 0;
-
-    spawnEnemies(&firstEnemy, &addedEnemy);
-    spawningWalls(&walls);
-    clock_t start, end;
-    long timeElapsed;
-    int timeToSeeAddedScores = 1;
-
-    player.reload = PLAYER_RELOAD;
-
-    player.x = SCREEN_WIDTH / 2 - player.width / 2;
-    player.y = 600;
-    int requestClose = 0;
-
-    while (!requestClose) {
-
-        start = clock();
-        prepareScene();
-        // blit(playBackground, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-        doInput(&requestClose);
-
-        handlePlayer(&firstBullet, &addedBullet);
-
-        handlingEnemy(&firstEnemy, &firstEnemyBullet, &addedEnemyBullet);
-
-        SDL_SetRenderDrawColor(app.renderer, 0, 255, 0, 255);
-        
-        drawBullets(&firstBullet, firstEnemy, &addedBullet, &firstEnemyBullet, &addedEnemyBullet,
-         &underLineTearIntervals, &addedUnderLineTearInterval, walls, extraEnemy);
-        if (player.reload != PLAYER_RELOAD) {
-            player.reload++;
-        }
-
-        drawingUnderLine(underLineTearIntervals);
-
-        blit(player.texture, player.x, player.y, player.width, player.height);
-        spawnExtraEnemy(extraEnemy);
-
-        if (prevScore != player.score) {
-            snprintf(scoreBuffer, 20, "Score: %d +%d", player.score, player.score - prevScore);
-            timeToSeeAddedScores = 120;
-        } else if (--timeToSeeAddedScores == 0) {
-            ++timeToSeeAddedScores;
-            snprintf(scoreBuffer, 20, "Score: %d", player.score);
-        }
-
-        SDL_Texture* scoreTexture = (SDL_Texture*) downloadingText(SansBold, scoreBuffer);
-
-        blit(scoreTexture, scorePosition.x, scorePosition.y, scorePosition.w, scorePosition.h);
-        SDL_DestroyTexture(scoreTexture);
-        presentingLivesInLow(smallSans, playerLives);
-
-        drawingWalls(walls);
-
-        wallBoom(walls);
-
-        end = clock();
-
-        timeElapsed = timediff(start, end);
-
-        presentScene();
-
-        if (timeElapsed < (1000 / 60)) SDL_Delay(1000/60 - timeElapsed);
-        // printf("Time elapsed - %ld\n", timeElapsed);
-
-        if (!player.health && --playerLives > 0) {
-            //showTransitionalScene(playerLives, SansBold);
-            player.health = 1;
-            player.score -= (100 / playerLives);
-            app.left = 0;
-            app.right = 0;
-            freeingAllocations(firstBullet);
-            freeingAllocations(firstEnemyBullet);
-            firstBullet = NULL;
-            addedBullet = NULL;
-            firstEnemyBullet = NULL;
-            addedEnemyBullet = NULL;
-            timeToSeeAddedScores = 1;
-            player.x = SCREEN_WIDTH / 2 - player.width / 2;
-            player.y = 600;
-        }
-
-        if (!playerLives) {
-            requestClose = 1;
-        }
-
-        prevScore = player.score;
-    }
-
-    if (!player.health && !playerLives) {
-        showGameOverScene(SansBold, smallSans);
-    }
-
-    */
-
+    // basic initialization
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
     memset(&app, 0, sizeof(App));
@@ -207,16 +73,17 @@ int main() {
     bool about;
     SDL_Event e;
     int menuOption = 0;
-
+    
+    // displaying menu
     displayMenu(window ,renderer, game, menu, setting, about, fullscreen, menuOption, e);
 
-
+    // main game loop
     while(game){
         int playerLives = 3;
 
         memset(&player, 0, sizeof(Entity));
 
-        player.texture = loadTexture(loadSurface("resources/playership.png"));
+        player.texture = loadTexture(loadSurface("resources/player.png"));
         enemyBulletTexture = loadTexture(loadSurface("resources/enemyBullet.png"));
         extraEnemyTexture = loadTexture(loadSurface("resources/extraEnemy.png"));
         enemyFirstRowBTexture = loadTexture(loadSurface("resources/1b.png"));
@@ -370,6 +237,7 @@ int main() {
     return 0;
 }
 
+// preparing & rendering menu 
 void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_x, int c_y) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -438,6 +306,7 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_
     SDL_RenderPresent(renderer);
 }
 
+// displaying menu
 void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
 
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
@@ -507,6 +376,7 @@ void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &m
     }
 }
 
+// preparing & rendering settings 
 void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -576,6 +446,7 @@ void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_RenderPresent(renderer);
 }
 
+// displaying settings
 void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event e){
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
     TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
@@ -597,6 +468,7 @@ void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event
        
 }
 
+// preparing & rendering about 
 void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -655,6 +527,7 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_RenderPresent(renderer);
 }
 
+// displaying about
 void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e){
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
     TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);

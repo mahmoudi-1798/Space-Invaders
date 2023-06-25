@@ -6,7 +6,7 @@ void initSDL() {
     int rendererFlags = SDL_RENDERER_ACCELERATED, windowFlags = 0;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("Couldn't initialize SDL - %s\n", SDL_GetError());
+        std::cout << "Couldn't initialize SDL: " << SDL_GetError() << std::endl;
         exit(1);
     }
 
@@ -14,7 +14,7 @@ void initSDL() {
                             SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 
     if (!app.window) {
-        printf("Failed to open window - %s\n", SDL_GetError());
+        std::cout << "Failed to open window: " << SDL_GetError() << std::endl;
         exit(1);
     }
 
@@ -23,7 +23,7 @@ void initSDL() {
     app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
 
     if (!app.renderer) {
-        printf("Failed to create renderer - %s\n", SDL_GetError());
+        std::cout << "Failed to create renderer: " << SDL_GetError() << std::endl;
         exit(1);
     }
 

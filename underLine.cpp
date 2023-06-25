@@ -15,14 +15,12 @@ SDL_bool checkingOnUnderlineTear(Interval** motherInterval, Entity* bullet, Inte
             (*motherInterval)->x2 = bullet->x + bullet->width;
             (*motherInterval)->next = NULL;
             *addedInterval = *motherInterval;
-            // printf("%p\n", motherInterval);
         } else {
             (*addedInterval)->next = (Interval*) malloc(sizeof(Interval));
             (*addedInterval)->next->x1 = bullet->x;
             (*addedInterval)->next->x2 = bullet->x + bullet->width;
             *addedInterval = (*addedInterval)->next;
             (*addedInterval)->next = NULL;
-            // printf("%p\n", motherInterval);
         }
         
         return SDL_TRUE;
