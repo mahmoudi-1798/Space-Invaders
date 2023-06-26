@@ -1,6 +1,6 @@
 
 #include "include/common.h"
-#include "include/structs.h"
+#include "include/base.h"
 #include "include/draw.h"
 #include "include/input.h"
 #include "include/init.h"

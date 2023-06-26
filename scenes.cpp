@@ -1,5 +1,5 @@
 #include "include/common.h"
-#include "include/structs.h"
+#include "include/base.h"
 #include "include/defs.h"
 #include "include/draw.h"
 #include "include/handlingPlayer.h"

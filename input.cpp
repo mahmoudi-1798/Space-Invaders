@@ -1,5 +1,5 @@
 #include "include/common.h"
-#include "include/structs.h"
+#include "include/base.h"
 
 void doKeyDown(SDL_KeyboardEvent* event) {
     if (event->repeat == 0) {

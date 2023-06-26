@@ -24,6 +24,25 @@ sudo dnf install SDL2-devel
 
 ## Course discription
 
-## Code overview
--
-- 
+## Overview
+- common.h: including base headers and declare extern variables 
+- base.h: declaring base classes. 
+    - App: main class of the game
+    - Entity: use this class to create entities in the game like player.
+    - Interval: 
+- defs.h: defined global variables.
+- init.h: initialize & prepare the SDL.
+- draw.h:  declare some functions to simplify drawing part of the game.
+- enemies.h: create enemies, bullets and charechteristics of enemies.
+- handlingPlayer.h: create player bullets and handeling player movements. 
+- input.h: handle inputs and assign functionallity to the keys.
+- scenes.h: handling special scenes in game such as <b>GAME OVER</b>.
+- underLine.h: drawing the green line in the game.
+- walls.h: handling walls in game.
+
+### main.cpp 
+- `main()`: main function contains the main game loop.
+- `renderMenu()`: we use it to render menu page and show it by `displayMenu()`.
+- `renderControls()`: we use it to render controls page and show it by `displayControls()`.
+- `renderAbout()`: we use it to render about page and show it by `displayAbout()`.
+

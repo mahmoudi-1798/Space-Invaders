@@ -4,8 +4,6 @@
 #include <iostream>
 
 class App{
-    private:
-
     public: 
         SDL_Renderer* renderer;
         SDL_Window* window;
@@ -17,8 +15,6 @@ class App{
 };
 
 class Entity{
-    private:
-
     public:
         int x;
         int y;
