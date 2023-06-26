@@ -63,9 +63,9 @@ int main() {
     app.window = window;
     app.fullscreen = false;
 
-    TTF_Font* smallSans = TTF_OpenFont("resources/virgo.ttf", SMALL_SANS);
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
+    TTF_Font* smallSans = TTF_OpenFont("resources/fonts/virgo.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansBig = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BIG_SANS);
 
     bool menu = true;
     bool game = false;
@@ -385,7 +385,7 @@ void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "Controls", textColor);
     SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
 
-    SDL_Surface* lineSurface = IMG_Load("resources/line2.png");
+    SDL_Surface* lineSurface = IMG_Load("resources/line.png");
     SDL_Texture* lineTex = SDL_CreateTextureFromSurface(renderer, lineSurface);
     SDL_Rect lineRect = {SCREEN_WIDTH / 2 - lineSurface->w / 2, (SCREEN_HEIGHT / 2 - lineSurface->h / 1) -140,
                           lineSurface->w, lineSurface->h};
@@ -475,7 +475,7 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "About", textColor);
     SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
 
-    SDL_Surface* lineSurface = IMG_Load("resources/line2.png");
+    SDL_Surface* lineSurface = IMG_Load("resources/line.png");
     SDL_Texture* lineTex = SDL_CreateTextureFromSurface(renderer, lineSurface);
     SDL_Rect lineRect1 = {SCREEN_WIDTH / 2 - lineSurface->w / 2, (SCREEN_HEIGHT / 2 - lineSurface->h / 1) -170,
                           lineSurface->w, lineSurface->h};
