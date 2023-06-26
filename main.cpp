@@ -40,10 +40,10 @@ App app;
 Entity player;
 Entity cursor;
 
-void renderMenu(SDL_Renderer* renderer, TTF_Font* font);
-void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool& about, bool &fullscreen,int &menuOption, SDL_Event e);
-void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
-void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event e);
+void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
+void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool& about, bool &fullscreen,int &menuOption, SDL_Event e);
+void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
+void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e);
 void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
 void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e);
 
@@ -69,13 +69,13 @@ int main() {
 
     bool menu = true;
     bool game = false;
-    bool setting;
+    bool controls;
     bool about;
     SDL_Event e;
     int menuOption = 0;
     
     // displaying menu
-    displayMenu(window ,renderer, game, menu, setting, about, fullscreen, menuOption, e);
+    displayMenu(window ,renderer, game, menu, controls, about, fullscreen, menuOption, e);
 
     // main game loop
     while(game){
@@ -202,7 +202,7 @@ int main() {
             showGameOverScene(SansBold, smallSans);
             game = false;
             menu = true;
-            displayMenu(window, renderer, game, menu, setting, about, fullscreen, menuOption, e);
+            displayMenu(window, renderer, game, menu, controls, about, fullscreen, menuOption, e);
         }
     }
 
@@ -260,7 +260,7 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_
     SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "New Game", textColor);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
     
-    SDL_Surface* textSurface3 = TTF_RenderText_Solid(font1, "Setting", textColor);
+    SDL_Surface* textSurface3 = TTF_RenderText_Solid(font1, "Controls", textColor);
     SDL_Texture* textTexture3 = SDL_CreateTextureFromSurface(renderer, textSurface3);
     
     SDL_Surface* textSurface4 = TTF_RenderText_Solid(font1, "About", textColor);
@@ -307,7 +307,7 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_
 }
 
 // displaying menu
-void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& setting, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
+void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
 
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
     TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
@@ -345,8 +345,8 @@ void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &m
                             break;
                         case 1:
                             // Options
-                            setting = true;
-                            displaySetting(renderer, setting, menu, e);
+                            controls = true;
+                            displayControls(renderer, controls, menu, e);
                             break;
                         case 2:
                             // About game
@@ -376,17 +376,20 @@ void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &m
     }
 }
 
-// preparing & rendering settings 
-void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
+// preparing & rendering controls 
+void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
     SDL_Color textColor = { 255, 255, 255 };
-    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "Setting", textColor);
+    SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "Controls", textColor);
     SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
 
-    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Controls", textColor);
-    SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
+    SDL_Surface* lineSurface = IMG_Load("resources/line2.png");
+    SDL_Texture* lineTex = SDL_CreateTextureFromSurface(renderer, lineSurface);
+    SDL_Rect lineRect = {SCREEN_WIDTH / 2 - lineSurface->w / 2, (SCREEN_HEIGHT / 2 - lineSurface->h / 1) -140,
+                          lineSurface->w, lineSurface->h};
+    SDL_RenderCopy(renderer, lineTex, NULL, &lineRect);
     
     SDL_Surface* textSurface31 = TTF_RenderText_Solid(font1, "Right:                D Key", textColor);
     SDL_Texture* textTexture31= SDL_CreateTextureFromSurface(renderer, textSurface31);
@@ -400,14 +403,9 @@ void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface5 = TTF_RenderText_Solid(font1, "Fullscreen:           F11", textColor);
     SDL_Texture* textTexture5 = SDL_CreateTextureFromSurface(renderer, textSurface5);
     
-    SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 1) -200,
+    SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, (SCREEN_HEIGHT / 2 - textSurface1->h / 1) -170,
                           textSurface1->w, textSurface1->h };
     SDL_RenderCopy(renderer, textTexture1, NULL, &textRect1);
-
-     
-    SDL_Rect textRect2 = { SCREEN_WIDTH / 2 - textSurface2->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 2) -150,
-                          textSurface2->w, textSurface2->h };
-    SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
      
     SDL_Rect textRect31 = { 450, 270,
                           textSurface31->w, textSurface31->h };
@@ -428,9 +426,9 @@ void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_DestroyTexture(textTexture1);
     SDL_FreeSurface(textSurface1);
 
-    SDL_DestroyTexture(textTexture2);
-    SDL_FreeSurface(textSurface2);
-    
+    SDL_DestroyTexture(lineTex);
+    SDL_FreeSurface(lineSurface);
+
     SDL_DestroyTexture(textTexture31);
     SDL_FreeSurface(textSurface31);
 
@@ -446,24 +444,24 @@ void renderSetting(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_RenderPresent(renderer);
 }
 
-// displaying settings
-void displaySetting(SDL_Renderer* renderer, bool &setting, bool &menu, SDL_Event e){
+// displaying controls
+void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e){
     TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
     TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
-    while(setting){
+    while(controls){
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
-                setting = false;
+                controls = false;
                 menu = false;
             }
             else if (e.type == SDL_KEYDOWN) {
                 if (e.key.keysym.sym == SDLK_RETURN) {
-                    setting = false;
+                    controls = false;
                     menu = true;
                 }
             }
         }
-        renderSetting(renderer, SansSmall, SansBold);
+        renderControls(renderer, SansSmall, SansBold);
     }
        
 }
@@ -477,7 +475,16 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface1 = TTF_RenderText_Solid(font2, "About", textColor);
     SDL_Texture* textTexture1 = SDL_CreateTextureFromSurface(renderer, textSurface1);
 
-    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Final project of Advanced Progrmming (Spring Semester)", textColor);
+    SDL_Surface* lineSurface = IMG_Load("resources/line2.png");
+    SDL_Texture* lineTex = SDL_CreateTextureFromSurface(renderer, lineSurface);
+    SDL_Rect lineRect1 = {SCREEN_WIDTH / 2 - lineSurface->w / 2, (SCREEN_HEIGHT / 2 - lineSurface->h / 1) -170,
+                          lineSurface->w, lineSurface->h};
+    SDL_Rect lineRect2 = {SCREEN_WIDTH / 2 - lineSurface->w / 2, (SCREEN_HEIGHT / 2 - lineSurface->h / 11) + 60,
+                          lineSurface->w, lineSurface->h};
+    SDL_RenderCopy(renderer, lineTex, NULL, &lineRect1);
+    SDL_RenderCopy(renderer, lineTex, NULL, &lineRect2);
+
+    SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Final project of Advanced Programming Course", textColor);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
     
     SDL_Surface* textSurface11 = TTF_RenderText_Solid(font2, "Socials", textColor);
@@ -501,16 +508,19 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
                           textSurface2->w, textSurface2->h };
     SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
      
-    SDL_Rect textRect31 = { 300, 430,
+    SDL_Rect textRect31 = { 360, 450,
                           textSurface31->w, textSurface31->h };
     SDL_RenderCopy(renderer, textTexture31, NULL, &textRect31);
 
-    SDL_Rect textRect32 = { 300, 480,
+    SDL_Rect textRect32 = { 360, 500,
                           textSurface32->w, textSurface32->h };
     SDL_RenderCopy(renderer, textTexture32, NULL, &textRect32);
 
     SDL_DestroyTexture(textTexture1);
     SDL_FreeSurface(textSurface1);
+
+    SDL_DestroyTexture(lineTex);
+    SDL_FreeSurface(lineSurface);
 
     SDL_DestroyTexture(textTexture11);
     SDL_FreeSurface(textSurface11);
