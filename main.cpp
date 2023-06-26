@@ -40,7 +40,7 @@ App app;
 Entity player;
 Entity cursor;
 
-void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
+void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_x, int c_y);
 void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool& about, bool &fullscreen,int &menuOption, SDL_Event e);
 void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
 void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e);
