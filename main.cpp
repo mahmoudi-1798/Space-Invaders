@@ -487,6 +487,9 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface2 = TTF_RenderText_Solid(font1, "Final project of Advanced Programming Course", textColor);
     SDL_Texture* textTexture2 = SDL_CreateTextureFromSurface(renderer, textSurface2);
     
+    SDL_Surface* textSurface21 = TTF_RenderText_Solid(font1, "(Spring 2023)", textColor);
+    SDL_Texture* textTexture21 = SDL_CreateTextureFromSurface(renderer, textSurface21);
+
     SDL_Surface* textSurface11 = TTF_RenderText_Solid(font2, "Socials", textColor);
     SDL_Texture* textTexture11 = SDL_CreateTextureFromSurface(renderer, textSurface11);
 
@@ -508,6 +511,10 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
                           textSurface2->w, textSurface2->h };
     SDL_RenderCopy(renderer, textTexture2, NULL, &textRect2);
      
+    SDL_Rect textRect21 = { SCREEN_WIDTH / 2 - textSurface21->w / 2, (SCREEN_HEIGHT / 2 - textSurface21->h / 2) -90,
+                          textSurface21->w, textSurface21->h };
+    SDL_RenderCopy(renderer, textTexture21, NULL, &textRect21);
+
     SDL_Rect textRect31 = { 360, 450,
                           textSurface31->w, textSurface31->h };
     SDL_RenderCopy(renderer, textTexture31, NULL, &textRect31);
@@ -527,7 +534,10 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
 
     SDL_DestroyTexture(textTexture2);
     SDL_FreeSurface(textSurface2);
-    
+
+    SDL_DestroyTexture(textTexture21);
+    SDL_FreeSurface(textSurface21);  
+
     SDL_DestroyTexture(textTexture31);
     SDL_FreeSurface(textSurface31);
 
