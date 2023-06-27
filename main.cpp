@@ -446,8 +446,8 @@ void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
 
 // displaying controls
 void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e){
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansSmall = TTF_OpenFont("resources/fonts/EnvyCode.ttf", SMALL_SANS);
     while(controls){
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
@@ -539,8 +539,8 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
 
 // displaying about
 void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e){
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansSmall = TTF_OpenFont("resources/fonts/EnvyCode.ttf", SMALL_SANS);
     while(about){
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
