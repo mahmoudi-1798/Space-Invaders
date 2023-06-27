@@ -309,8 +309,8 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_
 // displaying menu
 void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
 
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansBig = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BIG_SANS);
     
     cursor.x = SCREEN_WIDTH / 2 - 120;
     cursor.y = SCREEN_HEIGHT/2 + 130;

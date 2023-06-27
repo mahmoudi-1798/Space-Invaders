@@ -1,5 +1,5 @@
 #include "include/common.h"
-#include "include/base.h"
+#include "include/structs.h"
 
 void prepareScene()
 {
@@ -18,7 +18,7 @@ SDL_Surface *loadSurface(const char *path)
 
     if (!surface)
     {
-        std::cout << "Error creating a surface" << std::endl;
+        printf("Error creating a surface\n");
         SDL_DestroyRenderer(app.renderer);
         SDL_DestroyWindow(app.window);
         SDL_Quit();
@@ -35,7 +35,7 @@ SDL_Texture *loadTexture(SDL_Surface *surface)
 
     if (!tex)
     {
-        std::cout << "Error creating texture: " << SDL_GetError() << std::endl;
+        printf("Error creating texture - %s\n", SDL_GetError());
         SDL_DestroyRenderer(app.renderer);
         SDL_DestroyWindow(app.window);
         SDL_Quit();
