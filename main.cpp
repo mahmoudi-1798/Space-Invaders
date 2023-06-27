@@ -40,7 +40,7 @@ App app;
 Entity player;
 Entity cursor;
 
-void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
+void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_x, int c_y);
 void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool& about, bool &fullscreen,int &menuOption, SDL_Event e);
 void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2);
 void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e);
@@ -63,9 +63,9 @@ int main() {
     app.window = window;
     app.fullscreen = false;
 
-    TTF_Font* smallSans = TTF_OpenFont("resources/virgo.ttf", SMALL_SANS);
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
+    TTF_Font* smallSans = TTF_OpenFont("resources/fonts/virgo.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansBig = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BIG_SANS);
 
     bool menu = true;
     bool game = false;
@@ -309,8 +309,8 @@ void renderMenu(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2, int c_
 // displaying menu
 void displayMenu(SDL_Window* window, SDL_Renderer* renderer, bool &game, bool &menu, bool& controls, bool &about, bool &fullscreen,int &menuOption, SDL_Event e){
 
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansBig = TTF_OpenFont("resources/EnvyCode.ttf", BIG_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansBig = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BIG_SANS);
     
     cursor.x = SCREEN_WIDTH / 2 - 120;
     cursor.y = SCREEN_HEIGHT/2 + 130;
@@ -446,8 +446,8 @@ void renderControls(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
 
 // displaying controls
 void displayControls(SDL_Renderer* renderer, bool &controls, bool &menu, SDL_Event e){
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansSmall = TTF_OpenFont("resources/fonts/EnvyCode.ttf", SMALL_SANS);
     while(controls){
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
@@ -539,8 +539,8 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
 
 // displaying about
 void displayAbout(SDL_Renderer* renderer, bool &about, bool &menu, SDL_Event e){
-    TTF_Font* SansBold = TTF_OpenFont("resources/EnvyCode.ttf", BOLD_SANS);
-    TTF_Font* SansSmall = TTF_OpenFont("resources/EnvyCode.ttf", SMALL_SANS);
+    TTF_Font* SansBold = TTF_OpenFont("resources/fonts/EnvyCode.ttf", BOLD_SANS);
+    TTF_Font* SansSmall = TTF_OpenFont("resources/fonts/EnvyCode.ttf", SMALL_SANS);
     while(about){
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) {
