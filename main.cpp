@@ -493,7 +493,7 @@ void renderAbout(SDL_Renderer* renderer, TTF_Font* font1, TTF_Font* font2){
     SDL_Surface* textSurface31 = TTF_RenderText_Solid(font1, "Github:           github.com/mahmoudi-1798", textColor);
     SDL_Texture* textTexture31= SDL_CreateTextureFromSurface(renderer, textSurface31);
     
-    SDL_Surface* textSurface32 = TTF_RenderText_Solid(font1, "Linkedin:         linkedin.com/in/mohammad-hassan-mahmoudi", textColor);
+    SDL_Surface* textSurface32 = TTF_RenderText_Solid(font1, "                  github.com/AmirAliFakhari", textColor);
     SDL_Texture* textTexture32 = SDL_CreateTextureFromSurface(renderer, textSurface32);
     
     SDL_Rect textRect1 = { SCREEN_WIDTH / 2 - textSurface1->w / 2, (SCREEN_HEIGHT / 2 - textSurface2->h / 1) -200,
